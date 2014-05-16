@@ -1,0 +1,109 @@
+parameters:
+    salesforce.metadata.file_cache.class: CiscoSystems\SalesForceBundle\ForceToolkit\Metadata\Cache\MetadataFileCache
+    salesforce.metadata.array_cache.class: CiscoSystems\SalesForceBundle\ForceToolkit\Metadata\Cache\MetadataArrayCache
+    salesforce.metadata.describe_sobject.factory.class: CiscoSystems\SalesForceBundle\ForceToolkit\Metadata\DescribeSobjectFactory
+    salesforce.metadata.describe_layout.factory.class: CiscoSystems\SalesForceBundle\ForceToolkit\Metadata\DescribeLayoutFactory
+    salesforce.metadata.describe_form.factory.class: CiscoSystems\SalesForceBundle\ForceToolkit\Metadata\DescribeFormFactory
+
+    salesforce.type_factory.class:  CiscoSystems\SalesForceBundle\ForceToolkit\Soql\Type\TypeFactory
+    salesforce.query_parser.class:  CiscoSystems\SalesForceBundle\ForceToolkit\Soql\Parser\QueryParser
+    salesforce.query_tokenizer.class: CiscoSystems\SalesForceBundle\ForceToolkit\Soql\Tokenizer\Tokenizer
+    salesforce.query_renderer.class: Cisco\SalesForceBundle\ForceToolkit\Soql\Renderer\QueryRenderer
+    salesforce.query_builder.class:  Cisco\SalesForceBundle\ForceToolkit\Soql\Builder\QueryBuilder
+
+    salesforce.connection.class:  Cisco\SalesForceBundle\ForceToolkit\Soap\Client\Connection\ForceToolkitConnection
+    salesforce.connection_factory.class:  Cisco\SalesForceBundle\ForceToolkit\Soap\Client\Connection\ConnectionFactory
+    salesforce.connection_storage.class:  Cisco\SalesForceBundle\ForceToolkit\Soap\Client\Connection\Storage\APCStorage
+    salesforce.onkernelexceptionevent_listener.class:  Cisco\SalesForceBundle\Event\OnKernelExceptionEventListener
+
+    salesforce.validator.abstract.class:  Cisco\SalesForceBundle\ForceToolkit\Validator\Constraints\AbstractValidator
+    salesforce.validator.picklist.class:  Cisco\SalesForceBundle\ForceToolkit\Validator\Constraints\PicklistValidator
+    salesforce.validator.text.class:  Cisco\SalesForceBundle\ForceToolkit\Validator\Constraints\TextValidator
+
+    salesforce.form.sfdc_type.abstract.class:  Cisco\SalesForceBundle\ForceToolkit\Form\Type\AbstractType
+    salesforce.form.sfdc_type.picklist.class:  Cisco\SalesForceBundle\ForceToolkit\Form\Type\PicklistType
+    salesforce.form.sfdc_type.text.class:  Cisco\SalesForceBundle\ForceToolkit\Form\Type\TextType
+    salesforce.form.sfdc_type.textarea.class:  Cisco\SalesForceBundle\ForceToolkit\Form\Type\TextareaType
+    salesforce.form.sfdc_type.currency.class:  Cisco\SalesForceBundle\ForceToolkit\Form\Type\CurrencyType
+    salesforce.form.sfdc_type.phone.class:  Cisco\SalesForceBundle\ForceToolkit\Form\Type\PhoneType
+    salesforce.form.sfdc_type.email.class:  Cisco\SalesForceBundle\ForceToolkit\Form\Type\EmailType
+    salesforce.form.sfdc_type.datetime.class:  Cisco\SalesForceBundle\ForceToolkit\Form\Type\DateTimeType
+    salesforce.form.sfdc_type.date.class:  Cisco\SalesForceBundle\ForceToolkit\Form\Type\DateType
+
+services:
+    # SalesForce API Services
+
+    salesforce.metadata.file_cache:
+        class: %salesforce.metadata.file_cache.class%
+        arguments:
+            - '@salesforce.metadata.cache.location'
+            - '@salesforce.metadata.cache.ttl'
+
+    salesforce.metadata.array_cache:
+        class: %salesforce.metadata.array_cache.class%
+        arguments:
+            - '@salesforce.metadata.cache.ttl'
+
+
+    salesforce.query_tokenizer:
+        class: %salesforce.query_tokenizer.class%
+
+    salesforce.query_renderer:
+        class: %salesforce.query_renderer.class%
+        arguments:
+            - '@salesforce.type_factory'
+
+    salesforce.type_factory:
+        class: %salesforce.type_factory.class%
+
+    salesforce.query_parser:
+        class: %salesforce.query_parser.class%
+        arguments:
+            - '@salesforce.query_tokenizer'
+
+    # REACTS TO SESSION/CONNECTION TIMEOUTS
+    salesforce.onkernelexceptionevent_listener:
+        class: %salesforce.onkernelexceptionevent_listener.class%
+        arguments:
+            - '@salesforce.connection_storage'
+        tags:
+            - { name: kernel.event_listener, event: kernel.exception, method: onKernelException }
+
+
+    salesforce.connection_storage:
+        class: %salesforce.connection_storage.class%
+
+    salesforce.connection_factory:
+        class: %salesforce.connection_factory.class%
+        arguments:
+            - '@salesforce.connection_storage, {%salesforce.client.connection_ttl% , %salesforce.client.default_api_user%,
+                                                %salesforce.client.api_users%,%salesforce.client.wsdl_location%,
+                                                %salesforce.client.service_location%,%kernel.debug% }'
+            - '@security.context'
+            - '@logger'
+
+    salesforce.connection:
+        class: %salesforce.connection.class%
+        factory-service: 'salesforce.connection_factory'
+        factory-method:  'getInstance'
+
+    salesforce.client:
+        class: %salesforce.client.class%
+        arguments:
+            - '@salesforce.connection'
+
+    salesforce.query_builder:
+        class: %salesforce.query_builder.class%
+        arguments:
+            - '@salesforce.client'
+            - '@salesforce.query_parser'
+            - '@salesforce.query_renderer'
+
+
+    salesforce.metadata.file_cache:
+        class: %salesforce.metadata.file_cache.class%
+        arguements: { %salesforce.metadata.cache.location%, %salesforce.metadata.cache.ttl% }
+
+    salesforce.metadata.array_cache:
+        class: %salesforce.metadata.array_cache.class%
+        arguments: [%salesforce.metadata.cache.ttl%]

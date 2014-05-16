@@ -1,0 +1,22 @@
+{
+    "name": "cisco-systems/salesforce-bundle",
+    "type": "symfony-bundle",
+    "description": "Symfony bundle for accessing Salesforce.com",
+    "keywords": ["Salesforce", "SFDC", "API"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Andrew Wolder",
+            "email": "awolder@cisco.com",
+            "homepage": "www.cisco.com"
+        }
+    ],
+    "require": {
+        "symfony/symfony": ">=2.1"
+    },
+
+    "autoload": {
+        "psr-0": { "CiscoSystems\\SalesForceBundle": "" }
+    },
+    "target-dir": "CiscoSystems/SalesForceBundle"
+}
