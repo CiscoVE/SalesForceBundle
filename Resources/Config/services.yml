@@ -76,9 +76,13 @@ services:
     salesforce.connection_factory:
         class: %salesforce.connection_factory.class%
         arguments:
-            - '@salesforce.connection_storage, {%salesforce.client.connection_ttl% , %salesforce.client.default_api_user%,
-                                                %salesforce.client.api_users%,%salesforce.client.wsdl_location%,
-                                                %salesforce.client.service_location%,%kernel.debug% }'
+            - '@salesforce.connection_storage'
+            - %salesforce.client.connection_ttl%
+            - %salesforce.client.default_api_user%
+            - %salesforce.client.api_users%
+            - %salesforce.client.wsdl_location%
+            - %salesforce.client.service_location%
+            - %kernel.debug%'
             - '@security.context'
             - '@logger'
 
@@ -102,8 +106,105 @@ services:
 
     salesforce.metadata.file_cache:
         class: %salesforce.metadata.file_cache.class%
-        arguements: { %salesforce.metadata.cache.location%, %salesforce.metadata.cache.ttl% }
+        arguments: { %salesforce.metadata.cache.location%, %salesforce.metadata.cache.ttl% }
 
     salesforce.metadata.array_cache:
         class: %salesforce.metadata.array_cache.class%
-        arguments: [%salesforce.metadata.cache.ttl%]
+        arguments: { %salesforce.metadata.cache.ttl% }
+
+    salesforce.metadata.describe_sobject.factory:
+        class: %salesforce.metadata.describe_sobject.factory.class%
+        arguments:
+            - '@salesforce.client'
+
+    salesforce.metadata.describe_layout.factory:
+        class: %salesforce.metadata.describe_layout.factory.class%
+        arguments:
+            - '@salesforce.client'
+
+    salesforce.metadata.describe_form.factory:
+        class: %salesforce.metadata.describe_form.factory.class%
+        arguments:
+            - '@salesforce.metadata.describe_sobject.factory'
+            - '@salesforce.metadata.describe_layout.factory'
+            - '@salesforce.metadata.cache'
+
+    salesforce.form.sfdc_type.abstract:
+        abstract: true
+        class: %salesforce.form.sfdc_type.abstract.class%
+        arguments:
+            - '@salesforce.metadata.describe_form.factory'
+
+    salesforce.form.sfdc_type.picklist:
+        class: %salesforce.form.sfdc_type.picklist.class%
+        parent: salesforce.form.sfdc_type.abstract
+        tags:
+            - {name: form.type, alias: forcetk_picklist }
+
+    salesforce.form.sfdc_type.text:
+        class: %salesforce.form.sfdc_type.text.class%
+        parent: salesforce.form.sfdc_type.abstract
+        tags:
+            - { name: form.type, alias: forcetk_text }
+
+    salesforce.form.sfdc_type.textarea:
+        class: %salesforce.form.sfdc_type.textarea.class%
+        parent: salesforce.form.sfdc_type.abstract
+        tags:
+            - { name: form.type, alias: forcetk_textarea }
+
+    salesforce.form.sfdc_type.currency:
+        class: %salesforce.form.sfdc_type.currency.class%
+        parent: salesforce.form.sfdc_type.abstract
+        tags:
+            - { name: form.type, alias: forcetk_currency }
+
+    salesforce.form.sfdc_type.phone:
+        class: %salesforce.form.sfdc_type.phone.class%
+        parent: salesforce.form.sfdc_type.abstract
+        tags:
+            - { name: form.type, alias: forcetk_phone }
+
+    salesforce.form.sfdc_type.email:
+        class: %salesforce.form.sfdc_type.email.class%
+        parent: salesforce.form.sfdc_type.abstract
+        tags:
+            - { name: form.type, alias: forcetk_email }
+
+    salesforce.form.sfdc_type.datetime:
+        class: %salesforce.form.sfdc_type.datetime.class%
+        parent: salesforce.form.sfdc_type.abstract
+        tags:
+            - { name: form.type, alias: forcetk_datetime }
+
+    salesforce.form.sfdc_type.date:
+        class: %salesforce.form.sfdc_type.date.class%
+        parent: salesforce.form.sfdc_type.abstract
+        tags:
+            - { name: form.type, alias: forcetk_date }
+
+    salesforce.validator.abstract:
+        class: %salesforce.validator.abstract.class%
+        abstract: true
+        arguments:
+            - '@salesforce.metadata.describe_form.factory'
+
+    salesforce.validator.picklist:
+        class: %salesforce.validator.picklist.class%
+        parent: salesforce.validator.abstract
+        tags:
+            - { name: validator.constraint_validator, alias: forcetk_picklist_validator }
+
+    salesforce.validator.text:
+        class: %salesforce.validator.text.class%
+        parent: salesforce.validator.abstract
+        tags:
+            - { name: validator.constraint_validator, alias: forcetk_text_validator }
+
+    salesforce.formtype.case:
+        class: %cisco.salesforce.formtype.case.class%
+        arguments:
+            - '@doctrine.orm.entity_manager'
+        tags:
+            - { name: form.type, alias: sfdc_case_id_field }
+
