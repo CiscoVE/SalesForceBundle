@@ -6,6 +6,7 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension,
     Symfony\Component\Config\FileLocator,
     Symfony\Component\DependencyInjection\Loader\YamlFileLoader,
     Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\Config\Definition\Processor;
 
 class CiscoSystemsSalesForceExtension extends Extension
 {
@@ -17,6 +18,30 @@ class CiscoSystemsSalesForceExtension extends Extension
         // Load bundle default configuration
         $loader = new YamlFileLoader( $container, new FileLocator( __DIR__ . '/../Resources/config' ) );
         $loader->load( 'services.yml' );
-        
+
+        $processor     = new Processor();
+        $configuration = new Configuration();
+
+        $config = $processor->process($configuration->getConfigTree(), $configs);
+
+        $container->setParameter('salesforce.metadata.cache.ttl', $config['metadata']['cache_ttl']);
+        $container->setParameter('salesforce.metadata.cache.service_id', $config['metadata']['cache_service_id']);
+        $container->setParameter('salesforce.metadata.cache.location', $config['metadata']['cache_location']);
+
+        $container->setParameter('salesforce.client.class', $config['soap_api_client']['classname']);
+        $container->setParameter('salesforce.client.default_api_user', $config['soap_api_client']['api_users']['default']);
+        $container->setParameter('salesforce.client.api_users', $config['soap_api_client']['api_users']['locales']);
+        $container->setParameter('salesforce.client.service_location', $config['soap_api_client']['service_location']);
+        $container->setParameter('salesforce.client.wsdl_location', $config['soap_api_client']['wsdl_location']);
+        $container->setParameter('salesforce.client.connection_ttl', $config['soap_api_client']['connection_ttl']);
+
+        $loader->load('services.xml');
+
+        if(isset($config['metadata']['cache_service_id']))
+        {
+            $container->setAlias('salesforce.metadata.cache', $config['metadata']['cache_service_id']);
+        }
+
     }
+
 }

@@ -104,17 +104,6 @@ services:
             - '@salesforce.query_renderer'
 
 
-    salesforce.metadata.file_cache:
-        class: %salesforce.metadata.file_cache.class%
-        arguments:
-            - %salesforce.metadata.cache.location%
-            - %salesforce.metadata.cache.ttl%
-
-    salesforce.metadata.array_cache:
-        class: %salesforce.metadata.array_cache.class%
-        arguments:
-            - %salesforce.metadata.cache.ttl%
-
     salesforce.metadata.describe_sobject.factory:
         class: %salesforce.metadata.describe_sobject.factory.class%
         arguments:
