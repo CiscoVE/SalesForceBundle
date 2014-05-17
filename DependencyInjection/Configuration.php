@@ -20,29 +20,25 @@ class Configuration
     public function getConfigTree()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('cisco_sales_force', 'array');
+        $rootNode = $treeBuilder->root('cisco_sales_force');
 
         $rootNode
             ->children()
                 ->arrayNode('soap_api_client')
-                    ->isRequired()
                     ->children()
                         ->scalarNode('classname')->defaultValue('Cisco\\SalesForceBundle\\ForceToolkit\\Soap\\Client\\PartnerClient')->end()
                         ->scalarNode('connection_ttl')->defaultValue(28800)->end()
                         ->scalarNode('service_location')->defaultNull()->end()
                         ->scalarNode('wsdl_location')->isRequired()->end()
                         ->arrayNode('api_users')
-                            ->isRequired()
                             ->children()
                                 ->arrayNode('default')
-                                    ->isRequired()
                                     ->children()
                                         ->scalarNode('username')->end()
                                         ->scalarNode('password')->end()
                                     ->end()
                                 ->end()
                                 ->arrayNode('locales')
-                                    ->isRequired()
                                     ->useAttributeAsKey('locale')
                                     ->prototype('array')
                                         ->children()
