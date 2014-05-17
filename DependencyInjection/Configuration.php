@@ -20,7 +20,7 @@ class Configuration
     public function getConfigTree()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('cisco_sales_force');
+        $rootNode = $treeBuilder->root('cisco_sales_force', 'array');
 
         $rootNode
             ->children()
