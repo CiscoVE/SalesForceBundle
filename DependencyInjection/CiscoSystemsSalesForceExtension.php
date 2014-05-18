@@ -17,7 +17,7 @@ class CiscoSystemsSalesForceExtension extends Extension
         foreach ( $configs as $subConfig ) $config = array_merge( $config, $subConfig );
         // Load bundle default configuration
         $loader = new YamlFileLoader( $container, new FileLocator( __DIR__ . '/../Resources/config' ) );
-        $loader->load( 'services.yml' );
+
 
         $processor     = new Processor();
         $configuration = new Configuration();
@@ -35,7 +35,7 @@ class CiscoSystemsSalesForceExtension extends Extension
         $container->setParameter('salesforce.client.wsdl_location', $config['soap_api_client']['wsdl_location']);
         $container->setParameter('salesforce.client.connection_ttl', $config['soap_api_client']['connection_ttl']);
 
-        $loader->load('services.xml');
+        $loader->load( 'services.yml' );
 
         if(isset($config['metadata']['cache_service_id']))
         {
