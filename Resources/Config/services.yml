@@ -88,7 +88,7 @@ services:
 
     salesforce.connection:
         class: %salesforce.connection.class%
-        factory-service: 'salesforce.connection_factory'
+        factory-service: '@salesforce.connection_factory'
         factory-method:  'getInstance'
 
     salesforce.client:
