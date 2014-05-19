@@ -103,9 +103,9 @@ use CiscoSystems\SalesForceBundle\Soap\Client\Exception AS ClientException;
  */
 class Connection implements ConnectionInterface
 {
-    const CLASS_MAP_INTERFACE = 'Cisco\\SalesForceBundle\\Soap\\Mapping\\ClassInterface';
+    const CLASS_MAP_INTERFACE = 'CiscoSystems\\SalesForceBundle\\Soap\\Mapping\\ClassInterface';
 
-    const TYPE_MAP_INTERFACE = 'Cisco\\SalesForceBundle\\Soap\\Mapping\\Type\\TypeInterface';
+    const TYPE_MAP_INTERFACE = 'CiscoSystems\\SalesForceBundle\\Soap\\Mapping\\Type\\TypeInterface';
 
     const DEFAULT_OPTION_ENCODING = 'utf-8';
 

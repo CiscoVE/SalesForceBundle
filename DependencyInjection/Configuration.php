@@ -26,7 +26,7 @@ class Configuration
             ->children()
                 ->arrayNode('soap_api_client')
                     ->children()
-                        ->scalarNode('classname')->defaultValue('Cisco\\SalesForceBundle\\ForceToolkit\\Soap\\Client\\PartnerClient')->end()
+                        ->scalarNode('classname')->defaultValue('CiscoSystems\\SalesForceBundle\\ForceToolkit\\Soap\\Client\\PartnerClient')->end()
                         ->scalarNode('connection_ttl')->defaultValue(28800)->end()
                         ->scalarNode('service_location')->defaultNull()->end()
                         ->scalarNode('wsdl_location')->isRequired()->end()
