@@ -1,0 +1,179 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+
+        <parameter key="salesforce.metadata.file_cache.class">CiscoSystems\SalesForceBundle\ForceToolkit\Metadata\Cache\MetadataFileCache</parameter>
+        <parameter key="salesforce.metadata.array_cache.class">CiscoSystems\SalesForceBundle\ForceToolkit\Metadata\Cache\MetadataArrayCache</parameter>
+        <parameter key="salesforce.metadata.describe_sobject.factory.class">CiscoSystems\SalesForceBundle\ForceToolkit\Metadata\DescribeSobjectFactory</parameter>
+        <parameter key="salesforce.metadata.describe_layout.factory.class">CiscoSystems\SalesForceBundle\ForceToolkit\Metadata\DescribeLayoutFactory</parameter>
+        <parameter key="salesforce.metadata.describe_form.factory.class">CiscoSystems\SalesForceBundle\ForceToolkit\Metadata\DescribeFormFactory</parameter>
+
+        <parameter key="salesforce.type_factory.class">CiscoSystems\SalesForceBundle\ForceToolkit\Soql\Type\TypeFactory</parameter>
+        <parameter key="salesforce.query_parser.class">CiscoSystems\SalesForceBundle\ForceToolkit\Soql\Parser\QueryParser</parameter>
+        <parameter key="salesforce.query_tokenizer.class">CiscoSystems\SalesForceBundle\ForceToolkit\Soql\Tokenizer\Tokenizer</parameter>
+        <parameter key="salesforce.query_renderer.class">CiscoSystems\SalesForceBundle\ForceToolkit\Soql\Renderer\QueryRenderer</parameter>
+        <parameter key="salesforce.query_builder.class">CiscoSystems\SalesForceBundle\ForceToolkit\Soql\Builder\QueryBuilder</parameter>
+
+        <parameter key="salesforce.connection.class">CiscoSystems\SalesForceBundle\ForceToolkit\Soap\Client\Connection\ForceToolkitConnection</parameter>
+        <parameter key="salesforce.connection_factory.class">CiscoSystems\SalesForceBundle\ForceToolkit\Soap\Client\Connection\ConnectionFactory</parameter>
+        <parameter key="salesforce.connection_storage.class">CiscoSystems\SalesForceBundle\ForceToolkit\Soap\Client\Connection\Storage\APCStorage</parameter>
+        <parameter key="salesforce.onkernelexceptionevent_listener.class">CiscoSystems\SalesForceBundle\Event\OnKernelExceptionEventListener</parameter>
+
+        <parameter key="salesforce.validator.abstract.class">CiscoSystems\SalesForceBundle\ForceToolkit\Validator\Constraints\AbstractValidator</parameter>
+        <parameter key="salesforce.validator.picklist.class">CiscoSystems\SalesForceBundle\ForceToolkit\Validator\Constraints\PicklistValidator</parameter>
+        <parameter key="salesforce.validator.text.class">CiscoSystems\SalesForceBundle\ForceToolkit\Validator\Constraints\TextValidator</parameter>
+
+        <parameter key="salesforce.form.sfdc_type.abstract.class">CiscoSystems\SalesForceBundle\ForceToolkit\Form\Type\AbstractType</parameter>
+        <parameter key="salesforce.form.sfdc_type.picklist.class">CiscoSystems\SalesForceBundle\ForceToolkit\Form\Type\PicklistType</parameter>
+        <parameter key="salesforce.form.sfdc_type.text.class">CiscoSystems\SalesForceBundle\ForceToolkit\Form\Type\TextType</parameter>
+        <parameter key="salesforce.form.sfdc_type.textarea.class">CiscoSystems\SalesForceBundle\ForceToolkit\Form\Type\TextareaType</parameter>
+        <parameter key="salesforce.form.sfdc_type.currency.class">CiscoSystems\SalesForceBundle\ForceToolkit\Form\Type\CurrencyType</parameter>
+        <parameter key="salesforce.form.sfdc_type.phone.class">CiscoSystems\SalesForceBundle\ForceToolkit\Form\Type\PhoneType</parameter>
+        <parameter key="salesforce.form.sfdc_type.email.class">CiscoSystems\SalesForceBundle\ForceToolkit\Form\Type\EmailType</parameter>
+        <parameter key="salesforce.form.sfdc_type.datetime.class">CiscoSystems\SalesForceBundle\ForceToolkit\Form\Type\DateTimeType</parameter>
+        <parameter key="salesforce.form.sfdc_type.date.class">CiscoSystems\SalesForceBundle\ForceToolkit\Form\Type\DateType</parameter>
+    </parameters>
+
+    <services>
+
+        <service id="salesforce.query_tokenizer" class="%salesforce.query_tokenizer.class%" />
+
+        <service id="salesforce.query_renderer" class="%salesforce.query_renderer.class%">
+            <argument type="service" id="salesforce.type_factory" />
+        </service>
+
+        <service id="salesforce.type_factory" class="%salesforce.type_factory.class%"  />
+
+        <service id="salesforce.query_parser" class="%salesforce.query_parser.class%">
+            <argument type="service" id="salesforce.query_tokenizer"></argument>
+        </service>
+
+        <!-- REACTS TO SESSION/CONNECTION TIMEOUTS -->
+        <service id="salesforce.onkernelexceptionevent_listener" class="%salesforce.onkernelexceptionevent_listener.class%">
+            <argument type="service" id="salesforce.connection_storage" />
+            <tag
+                    name="kernel.event_listener"
+                    event="kernel.exception"
+                    method="onKernelException"
+                    />
+        </service>
+
+        <service id="salesforce.connection_storage" class="%salesforce.connection_storage.class%" />
+
+        <service
+                id="salesforce.connection_factory"
+                class="%salesforce.connection_factory.class%"
+        >
+            <argument type="service" id="salesforce.connection_storage" />
+            <argument>%salesforce.client.connection_ttl%</argument>
+            <argument>%salesforce.client.default_api_user%</argument>
+            <argument>%salesforce.client.api_users%</argument>
+            <argument>%salesforce.client.wsdl_location%</argument>
+            <argument>%salesforce.client.service_location%</argument>
+            <argument>%kernel.debug%</argument>
+            <argument type="service" id="security.context" />
+            <argument type="service" id="logger" />
+
+        </service>
+
+        <service
+                id="salesforce.connection"
+                class="%salesforce.connection.class%"
+                factory-service="salesforce.connection_factory"
+                factory-method="getInstance"
+        />
+
+        <service id="salesforce.client" class="%salesforce.client.class%">
+            <argument type="service" id="salesforce.connection" />
+        </service>
+
+        <service id="salesforce.query_builder" class="%salesforce.query_builder.class%">
+            <argument type="service" id="salesforce.client" />
+            <argument type="service" id="salesforce.query_parser" />
+            <argument type="service" id="salesforce.query_renderer" />
+        </service>
+
+        <service id="salesforce.metadata.file_cache" class="%salesforce.metadata.file_cache.class%">
+            <argument type="string">%salesforce.metadata.cache.location%</argument>
+            <argument type="string">%salesforce.metadata.cache.ttl%</argument>
+        </service>
+
+        <service id="salesforce.metadata.array_cache" class="%salesforce.metadata.array_cache.class%">
+            <argument type="string">%salesforce.metadata.cache.ttl%</argument>
+        </service>
+
+
+        <service id="salesforce.metadata.describe_sobject.factory" class="%salesforce.metadata.describe_sobject.factory.class%">
+            <argument type="service" id="salesforce.client" />
+        </service>
+
+        <service id="salesforce.metadata.describe_layout.factory" class="%salesforce.metadata.describe_layout.factory.class%">
+            <argument type="service" id="salesforce.client" />
+        </service>
+
+        <service id="salesforce.metadata.describe_form.factory" class="%salesforce.metadata.describe_form.factory.class%">
+            <argument type="service" id="salesforce.metadata.describe_sobject.factory" />
+            <argument type="service" id="salesforce.metadata.describe_layout.factory" />
+            <argument type="service" id="salesforce.metadata.cache" />
+        </service>
+
+        <service id="salesforce.form.sfdc_type.abstract" abstract="true" class="%salesforce.form.sfdc_type.abstract.class%">
+            <argument type="service" id="salesforce.metadata.describe_form.factory" />
+        </service>
+
+        <service id="salesforce.form.sfdc_type.picklist" class="%salesforce.form.sfdc_type.picklist.class%" parent="salesforce.form.sfdc_type.abstract">
+            <tag name="form.type" alias="forcetk_picklist" />
+        </service>
+
+        <service id="salesforce.form.sfdc_type.text" class="%salesforce.form.sfdc_type.text.class%"  parent="salesforce.form.sfdc_type.abstract">
+            <tag name="form.type" alias="forcetk_text" />
+        </service>
+
+        <service id="salesforce.form.sfdc_type.textarea" class="%salesforce.form.sfdc_type.textarea.class%"  parent="salesforce.form.sfdc_type.abstract">
+            <tag name="form.type" alias="forcetk_textarea" />
+        </service>
+
+        <service id="salesforce.form.sfdc_type.currency" class="%salesforce.form.sfdc_type.currency.class%"  parent="salesforce.form.sfdc_type.abstract">
+            <tag name="form.type" alias="forcetk_currency" />
+        </service>
+
+        <service id="salesforce.form.sfdc_type.phone" class="%salesforce.form.sfdc_type.phone.class%"  parent="salesforce.form.sfdc_type.abstract">
+            <tag name="form.type" alias="forcetk_phone" />
+        </service>
+
+        <service id="salesforce.form.sfdc_type.email" class="%salesforce.form.sfdc_type.email.class%"  parent="salesforce.form.sfdc_type.abstract">
+            <tag name="form.type" alias="forcetk_email" />
+        </service>
+
+        <service id="salesforce.form.sfdc_type.datetime" class="%salesforce.form.sfdc_type.datetime.class%"  parent="salesforce.form.sfdc_type.abstract">
+            <tag name="form.type" alias="forcetk_datetime" />
+        </service>
+
+        <service id="salesforce.form.sfdc_type.date" class="%salesforce.form.sfdc_type.date.class%"  parent="salesforce.form.sfdc_type.abstract">
+            <tag name="form.type" alias="forcetk_date" />
+        </service>
+
+        <service id="salesforce.validator.abstract" class="%salesforce.validator.abstract.class%" abstract="true">
+            <argument type="service" id="salesforce.metadata.describe_form.factory" />
+        </service>
+
+        <service id="salesforce.validator.picklist" class="%salesforce.validator.picklist.class%" parent="salesforce.validator.abstract">
+            <tag name="validator.constraint_validator" alias="forcetk_picklist_validator" />
+        </service>
+
+        <service id="salesforce.validator.text" class="%salesforce.validator.text.class%" parent="salesforce.validator.abstract">
+            <tag name="validator.constraint_validator" alias="forcetk_text_validator" />
+        </service>
+
+        <service id="salesforce.formtype.case" class="%cisco.salesforce.formtype.case.class%" >
+            <argument type="service" id="doctrine.orm.entity_manager" />
+            <tag name="form.type" alias="sfdc_case_id_field" />
+        </service>
+
+
+    </services>
+</container>
