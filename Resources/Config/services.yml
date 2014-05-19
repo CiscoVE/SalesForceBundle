@@ -8,27 +8,27 @@ parameters:
     salesforce.type_factory.class:  CiscoSystems\SalesForceBundle\ForceToolkit\Soql\Type\TypeFactory
     salesforce.query_parser.class:  CiscoSystems\SalesForceBundle\ForceToolkit\Soql\Parser\QueryParser
     salesforce.query_tokenizer.class: CiscoSystems\SalesForceBundle\ForceToolkit\Soql\Tokenizer\Tokenizer
-    salesforce.query_renderer.class: Cisco\SalesForceBundle\ForceToolkit\Soql\Renderer\QueryRenderer
-    salesforce.query_builder.class:  Cisco\SalesForceBundle\ForceToolkit\Soql\Builder\QueryBuilder
+    salesforce.query_renderer.class: CiscoSystems\SalesForceBundle\ForceToolkit\Soql\Renderer\QueryRenderer
+    salesforce.query_builder.class:  CiscoSystems\SalesForceBundle\ForceToolkit\Soql\Builder\QueryBuilder
 
-    salesforce.connection.class:  Cisco\SalesForceBundle\ForceToolkit\Soap\Client\Connection\ForceToolkitConnection
-    salesforce.connection_factory.class:  Cisco\SalesForceBundle\ForceToolkit\Soap\Client\Connection\ConnectionFactory
-    salesforce.connection_storage.class:  Cisco\SalesForceBundle\ForceToolkit\Soap\Client\Connection\Storage\APCStorage
-    salesforce.onkernelexceptionevent_listener.class:  Cisco\SalesForceBundle\Event\OnKernelExceptionEventListener
+    salesforce.connection.class:  CiscoSystems\SalesForceBundle\ForceToolkit\Soap\Client\Connection\ForceToolkitConnection
+    salesforce.connection_factory.class:  CiscoSystems\SalesForceBundle\ForceToolkit\Soap\Client\Connection\ConnectionFactory
+    salesforce.connection_storage.class:  CiscoSystems\SalesForceBundle\ForceToolkit\Soap\Client\Connection\Storage\APCStorage
+    salesforce.onkernelexceptionevent_listener.class:  CiscoSystems\SalesForceBundle\Event\OnKernelExceptionEventListener
 
-    salesforce.validator.abstract.class:  Cisco\SalesForceBundle\ForceToolkit\Validator\Constraints\AbstractValidator
-    salesforce.validator.picklist.class:  Cisco\SalesForceBundle\ForceToolkit\Validator\Constraints\PicklistValidator
-    salesforce.validator.text.class:  Cisco\SalesForceBundle\ForceToolkit\Validator\Constraints\TextValidator
+    salesforce.validator.abstract.class:  CiscoSystems\SalesForceBundle\ForceToolkit\Validator\Constraints\AbstractValidator
+    salesforce.validator.picklist.class:  CiscoSystems\SalesForceBundle\ForceToolkit\Validator\Constraints\PicklistValidator
+    salesforce.validator.text.class:  CiscoSystems\SalesForceBundle\ForceToolkit\Validator\Constraints\TextValidator
 
-    salesforce.form.sfdc_type.abstract.class:  Cisco\SalesForceBundle\ForceToolkit\Form\Type\AbstractType
-    salesforce.form.sfdc_type.picklist.class:  Cisco\SalesForceBundle\ForceToolkit\Form\Type\PicklistType
-    salesforce.form.sfdc_type.text.class:  Cisco\SalesForceBundle\ForceToolkit\Form\Type\TextType
-    salesforce.form.sfdc_type.textarea.class:  Cisco\SalesForceBundle\ForceToolkit\Form\Type\TextareaType
-    salesforce.form.sfdc_type.currency.class:  Cisco\SalesForceBundle\ForceToolkit\Form\Type\CurrencyType
-    salesforce.form.sfdc_type.phone.class:  Cisco\SalesForceBundle\ForceToolkit\Form\Type\PhoneType
-    salesforce.form.sfdc_type.email.class:  Cisco\SalesForceBundle\ForceToolkit\Form\Type\EmailType
-    salesforce.form.sfdc_type.datetime.class:  Cisco\SalesForceBundle\ForceToolkit\Form\Type\DateTimeType
-    salesforce.form.sfdc_type.date.class:  Cisco\SalesForceBundle\ForceToolkit\Form\Type\DateType
+    salesforce.form.sfdc_type.abstract.class:  CiscoSystems\SalesForceBundle\ForceToolkit\Form\Type\AbstractType
+    salesforce.form.sfdc_type.picklist.class:  CiscoSystems\SalesForceBundle\ForceToolkit\Form\Type\PicklistType
+    salesforce.form.sfdc_type.text.class:  CiscoSystems\SalesForceBundle\ForceToolkit\Form\Type\TextType
+    salesforce.form.sfdc_type.textarea.class:  CiscoSystems\SalesForceBundle\ForceToolkit\Form\Type\TextareaType
+    salesforce.form.sfdc_type.currency.class:  CiscoSystems\SalesForceBundle\ForceToolkit\Form\Type\CurrencyType
+    salesforce.form.sfdc_type.phone.class:  CiscoSystems\SalesForceBundle\ForceToolkit\Form\Type\PhoneType
+    salesforce.form.sfdc_type.email.class:  CiscoSystems\SalesForceBundle\ForceToolkit\Form\Type\EmailType
+    salesforce.form.sfdc_type.datetime.class:  CiscoSystems\SalesForceBundle\ForceToolkit\Form\Type\DateTimeType
+    salesforce.form.sfdc_type.date.class:  CiscoSystems\SalesForceBundle\ForceToolkit\Form\Type\DateType
 
 services:
     # SalesForce API Services
@@ -82,7 +82,7 @@ services:
             - %salesforce.client.api_users%
             - %salesforce.client.wsdl_location%
             - %salesforce.client.service_location%
-            - %kernel.debug%'
+            - %kernel.debug%
             - '@security.context'
             - '@logger'
 
