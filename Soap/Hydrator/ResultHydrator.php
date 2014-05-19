@@ -20,12 +20,12 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-namespace Cisco\SalesForceBundle\Soap\Hydrator;
+namespace CiscoSystems\SalesForceBundle\Soap\Hydrator;
 
 use \stdClass;
 
-use Cisco\SalesForceBundle\Soap\Mapping\GenericResult;
-use Cisco\SalesForceBundle\Soap\Mapping\GenericResultCollection;
+use CiscoSystems\SalesForceBundle\Soap\Mapping\GenericResult;
+use CiscoSystems\SalesForceBundle\Soap\Mapping\GenericResultCollection;
 
 /**
  * @author Johannes Heinen <johannes.heinen@code-mitte.de>

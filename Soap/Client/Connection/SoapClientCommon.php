@@ -20,7 +20,7 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-namespace Cisco\SalesForceBundle\Soap\Client\Connection;
+namespace CiscoSystems\SalesForceBundle\Soap\Client\Connection;
 
 use \SoapClient;
 use \SoapFault;

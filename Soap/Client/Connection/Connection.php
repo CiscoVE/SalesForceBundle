@@ -20,16 +20,16 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-namespace Cisco\SalesForceBundle\Soap\Client\Connection;
+namespace CiscoSystems\SalesForceBundle\Soap\Client\Connection;
 
 use \SoapHeader;
 use \SoapFault AS GenericSoapFault;
 
-use Cisco\SalesForceBundle\Client\Connection\SoapFault;
-use Cisco\SalesForceBundle\Soap\Hydrator;
-use Cisco\SalesForceBundle\Soap\Client\Decorator\DecoratorInterface;
-use Cisco\SalesForceBundle\Soap\Client\Decorator\SoapParamDecorator;
-use Cisco\SalesForceBundle\Soap\Client\Exception AS ClientException;
+use CiscoSystems\SalesForceBundle\Client\Connection\SoapFault;
+use CiscoSystems\SalesForceBundle\Soap\Hydrator;
+use CiscoSystems\SalesForceBundle\Soap\Client\Decorator\DecoratorInterface;
+use CiscoSystems\SalesForceBundle\Soap\Client\Decorator\SoapParamDecorator;
+use CiscoSystems\SalesForceBundle\Soap\Client\Exception AS ClientException;
 
 /**
  * Connection: Generic SOAP Client connection class.

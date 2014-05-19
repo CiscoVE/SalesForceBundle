@@ -20,7 +20,7 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-namespace Cisco\SalesForceBundle\Soap\Mapping\Type;
+namespace CiscoSystems\SalesForceBundle\Soap\Mapping\Type;
 
 use \BadMethodCallException;
 

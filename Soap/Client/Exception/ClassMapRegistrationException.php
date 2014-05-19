@@ -20,7 +20,7 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-namespace Cisco\SalesForceBundle\Soap\Client\Exception;
+namespace CiscoSystems\SalesForceBundle\Soap\Client\Exception;
 
 /**
  * @author Johannes Heinen <johannes.heinen@code-mitte.de>

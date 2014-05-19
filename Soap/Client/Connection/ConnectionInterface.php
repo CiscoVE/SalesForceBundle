@@ -20,11 +20,11 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-namespace Cisco\SalesForceBundle\Soap\Client\Connection;
+namespace CiscoSystems\SalesForceBundle\Soap\Client\Connection;
 
 use \Serializable;
 use \SoapHeader;
-use Cisco\SalesForceBundle\Soap\Hydrator\HydratorInterface;
+use CiscoSystems\SalesForceBundle\Soap\Hydrator\HydratorInterface;
 
 /**
  * ConnectionInterface

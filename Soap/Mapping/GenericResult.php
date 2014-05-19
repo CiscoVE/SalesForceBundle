@@ -20,11 +20,11 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-namespace Cisco\SalesForceBundle\Soap\Mapping;
+namespace CiscoSystems\SalesForceBundle\Soap\Mapping;
 
 
-use Cisco\SalesForceBundle\Common\Collection\GenericMap;
-use Cisco\SalesForceBundle\Soap\Mapping\ClassInterface;
+use CiscoSystems\SalesForceBundle\Common\Collection\GenericMap;
+use CiscoSystems\SalesForceBundle\Soap\Mapping\ClassInterface;
 
 /**
  * GenericResult

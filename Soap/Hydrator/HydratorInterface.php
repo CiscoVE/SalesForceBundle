@@ -20,7 +20,7 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-namespace Cisco\SalesForceBundle\Soap\Hydrator;
+namespace CiscoSystems\SalesForceBundle\Soap\Hydrator;
 
 
 /**

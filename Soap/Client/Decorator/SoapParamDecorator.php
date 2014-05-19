@@ -20,13 +20,13 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-namespace Cisco\SalesForceBundle\Soap\Client\Decorator;
+namespace CiscoSystems\SalesForceBundle\Soap\Client\Decorator;
 
 use \SoapVar;
 use \ReflectionObject;
 use \ReflectionProperty;
 
-use Cisco\SalesForceBundle\Soap\Mapping\Type\TypeInterface;
+use CiscoSystems\SalesForceBundle\Soap\Mapping\Type\TypeInterface;
 
 /**
  * DecoratorInterface
