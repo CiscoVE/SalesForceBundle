@@ -1,34 +1,34 @@
 parameters:
-    salesforce.metadata.file_cache.class: CiscoSystems\SalesForceBundle\ForceToolkit\Metadata\Cache\MetadataFileCache
-    salesforce.metadata.array_cache.class: CiscoSystems\SalesForceBundle\ForceToolkit\Metadata\Cache\MetadataArrayCache
-    salesforce.metadata.describe_sobject.factory.class: CiscoSystems\SalesForceBundle\ForceToolkit\Metadata\DescribeSobjectFactory
-    salesforce.metadata.describe_layout.factory.class: CiscoSystems\SalesForceBundle\ForceToolkit\Metadata\DescribeLayoutFactory
-    salesforce.metadata.describe_form.factory.class: CiscoSystems\SalesForceBundle\ForceToolkit\Metadata\DescribeFormFactory
+    salesforce.metadata.file_cache.class: Codemitte\ForceToolkit\Metadata\Cache\MetadataFileCache
+    salesforce.metadata.array_cache.class: Codemitte\ForceToolkit\Metadata\Cache\MetadataArrayCache
+    salesforce.metadata.describe_sobject.factory.class: Codemitte\ForceToolkit\Metadata\DescribeSobjectFactory
+    salesforce.metadata.describe_layout.factory.class: Codemitte\ForceToolkit\Metadata\DescribeLayoutFactory
+    salesforce.metadata.describe_form.factory.class: Codemitte\ForceToolkit\Metadata\DescribeFormFactory
 
-    salesforce.type_factory.class:  CiscoSystems\SalesForceBundle\ForceToolkit\Soql\Type\TypeFactory
-    salesforce.query_parser.class:  CiscoSystems\SalesForceBundle\ForceToolkit\Soql\Parser\QueryParser
-    salesforce.query_tokenizer.class: CiscoSystems\SalesForceBundle\ForceToolkit\Soql\Tokenizer\Tokenizer
-    salesforce.query_renderer.class: CiscoSystems\SalesForceBundle\ForceToolkit\Soql\Renderer\QueryRenderer
-    salesforce.query_builder.class:  CiscoSystems\SalesForceBundle\ForceToolkit\Soql\Builder\QueryBuilder
+    salesforce.type_factory.class:  Codemitte\ForceToolkit\Soql\Type\TypeFactory
+    salesforce.query_parser.class:  Codemitte\ForceToolkit\Soql\Parser\QueryParser
+    salesforce.query_tokenizer.class: Codemitte\ForceToolkit\Soql\Tokenizer\Tokenizer
+    salesforce.query_renderer.class: Codemitte\ForceToolkit\Soql\Renderer\QueryRenderer
+    salesforce.query_builder.class:  Codemitte\ForceToolkit\Soql\Builder\QueryBuilder
 
-    salesforce.connection.class:  CiscoSystems\SalesForceBundle\ForceToolkit\Soap\Client\Connection\ForceToolkitConnection
-    salesforce.connection_factory.class:  CiscoSystems\SalesForceBundle\ForceToolkit\Soap\Client\Connection\ConnectionFactory
-    salesforce.connection_storage.class:  CiscoSystems\SalesForceBundle\ForceToolkit\Soap\Client\Connection\Storage\APCStorage
+    salesforce.connection.class:  Codemitte\ForceToolkit\Soap\Client\Connection\ForceToolkitConnection
+    salesforce.connection_factory.class:  Codemitte\ForceToolkit\Soap\Client\Connection\ConnectionFactory
+    salesforce.connection_storage.class:  Codemitte\ForceToolkit\Soap\Client\Connection\Storage\APCStorage
     salesforce.onkernelexceptionevent_listener.class:  CiscoSystems\SalesForceBundle\Event\OnKernelExceptionEventListener
 
-    salesforce.validator.abstract.class:  CiscoSystems\SalesForceBundle\ForceToolkit\Validator\Constraints\AbstractValidator
-    salesforce.validator.picklist.class:  CiscoSystems\SalesForceBundle\ForceToolkit\Validator\Constraints\PicklistValidator
-    salesforce.validator.text.class:  CiscoSystems\SalesForceBundle\ForceToolkit\Validator\Constraints\TextValidator
+    salesforce.validator.abstract.class:  Codemitte\ForceToolkit\Validator\Constraints\AbstractValidator
+    salesforce.validator.picklist.class:  Codemitte\ForceToolkit\Validator\Constraints\PicklistValidator
+    salesforce.validator.text.class:  Codemitte\ForceToolkit\Validator\Constraints\TextValidator
 
-    salesforce.form.sfdc_type.abstract.class:  CiscoSystems\SalesForceBundle\ForceToolkit\Form\Type\AbstractType
-    salesforce.form.sfdc_type.picklist.class:  CiscoSystems\SalesForceBundle\ForceToolkit\Form\Type\PicklistType
-    salesforce.form.sfdc_type.text.class:  CiscoSystems\SalesForceBundle\ForceToolkit\Form\Type\TextType
-    salesforce.form.sfdc_type.textarea.class:  CiscoSystems\SalesForceBundle\ForceToolkit\Form\Type\TextareaType
-    salesforce.form.sfdc_type.currency.class:  CiscoSystems\SalesForceBundle\ForceToolkit\Form\Type\CurrencyType
-    salesforce.form.sfdc_type.phone.class:  CiscoSystems\SalesForceBundle\ForceToolkit\Form\Type\PhoneType
-    salesforce.form.sfdc_type.email.class:  CiscoSystems\SalesForceBundle\ForceToolkit\Form\Type\EmailType
-    salesforce.form.sfdc_type.datetime.class:  CiscoSystems\SalesForceBundle\ForceToolkit\Form\Type\DateTimeType
-    salesforce.form.sfdc_type.date.class:  CiscoSystems\SalesForceBundle\ForceToolkit\Form\Type\DateType
+    salesforce.form.sfdc_type.abstract.class:  Codemitte\ForceToolkit\Form\Type\AbstractType
+    salesforce.form.sfdc_type.picklist.class:  Codemitte\ForceToolkit\Form\Type\PicklistType
+    salesforce.form.sfdc_type.text.class:  Codemitte\ForceToolkit\Form\Type\TextType
+    salesforce.form.sfdc_type.textarea.class:  Codemitte\ForceToolkit\Form\Type\TextareaType
+    salesforce.form.sfdc_type.currency.class:  Codemitte\ForceToolkit\Form\Type\CurrencyType
+    salesforce.form.sfdc_type.phone.class:  Codemitte\ForceToolkit\Form\Type\PhoneType
+    salesforce.form.sfdc_type.email.class:  Codemitte\ForceToolkit\Form\Type\EmailType
+    salesforce.form.sfdc_type.datetime.class:  Codemitte\ForceToolkit\Form\Type\DateTimeType
+    salesforce.form.sfdc_type.date.class:  Codemitte\ForceToolkit\Form\Type\DateType
 
 services:
     # SalesForce API Services

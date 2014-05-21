@@ -27,7 +27,7 @@ use
     Symfony\Component\HttpFoundation\Response,
     Symfony\Component\HttpFoundation\RedirectResponse,
     Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent,
-    CiscoSystems\SalesForceBundle\ForceToolkit\Soap\Client\Connection\Storage\StorageInterface,
+    Codemitte\ForceToolkit\Soap\Client\Connection\Storage\StorageInterface,
     CiscoSystems\SalesForceBundle\Soap\Client\Connection\TracedSoapFault
 ;
 
