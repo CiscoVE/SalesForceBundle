@@ -12,21 +12,29 @@ use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
  *
  * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html#cookbook-bundles-extension-config-class}
  */
-class Configuration
+class Configuration implements ConfigurationInterface
 {
     /**
      * {@inheritDoc}
      */
-    public function getConfigTree()
+    public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('cisco_sales_force', 'array');
+        $rootNode = $treeBuilder->root('cisco_systems_sales_force', 'array');
 
+        $this->addSoapApiClientSection( $rootNode );
+        $this->addMetadataSection( $rootNode );
+
+        return $treeBuilder;
+    }
+
+    private function addSoapApiClientSection( ArrayNodeDefinition $rootNode )
+    {
         $rootNode
             ->children()
                 ->arrayNode('soap_api_client')
                     ->children()
-                        ->scalarNode('classname')->defaultValue('CiscoSystems\\SalesForceBundle\\ForceToolkit\\Soap\\Client\\PartnerClient')->end()
+                        ->scalarNode('classname')->defaultValue('Codemitte\\ForceToolkit\\Soap\\Client\\PartnerClient')->end()
                         ->scalarNode('connection_ttl')->defaultValue(28800)->end()
                         ->scalarNode('service_location')->defaultNull()->end()
                         ->scalarNode('wsdl_location')->isRequired()->end()
@@ -52,21 +60,23 @@ class Configuration
                         ->end()
                     ->end()
                 ->end()
+            ->end()
+        ->end();
+    }
+
+    private function addMetadataSection( ArrayNodeDefinition $rootNode )
+    {
+        $rootNode
+            ->children()
                 ->arrayNode('metadata')
-                    ->isRequired()
+                    ->addDefaultsIfNotSet()
                     ->children()
-                        ->scalarNode('cache_service_id')->isRequired()->end()
-                        ->scalarNode('cache_location')->defaultValue('%kernel.root_dir%/cache/forcetk')->end()
-                        ->scalarNode('cache_ttl')->defaultValue(-1)->end()
+                        ->scalarNode('cache_service_id')->cannotBeEmpty()->defaultValue('codemitte_forcetk.metadata.file_cache')->end()
+                        ->scalarNode('cache_location')->cannotBeEmpty()->defaultValue('%kernel.root_dir%/cache/forcetk')->end()
+                        ->scalarNode('cache_ttl')->cannotBeEmpty()->defaultValue(-1)->end()
                     ->end()
                 ->end()
             ->end()
         ->end();
-
-        // Here you should define the parameters that are allowed to
-        // configure your bundle. See the documentation linked above for
-        // more information on that topic.
-
-        return $treeBuilder->buildTree();
     }
 }
