@@ -71,7 +71,7 @@ class Configuration implements ConfigurationInterface
                 ->arrayNode('metadata')
                     ->addDefaultsIfNotSet()
                     ->children()
-                        ->scalarNode('cache_service_id')->cannotBeEmpty()->defaultValue('codemitte_forcetk.metadata.file_cache')->end()
+                        ->scalarNode('cache_service_id')->cannotBeEmpty()->defaultValue('salesforce.metadata.file_cache')->end()
                         ->scalarNode('cache_location')->cannotBeEmpty()->defaultValue('%kernel.root_dir%/cache/forcetk')->end()
                         ->scalarNode('cache_ttl')->cannotBeEmpty()->defaultValue(-1)->end()
                     ->end()
